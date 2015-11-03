@@ -99,8 +99,6 @@
 #pragma mark - NSURLSessionDataDelegate
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler{
     
-
-    
      _fileExtension = [response.suggestedFilename pathExtension];
     
     // we only have a subset of the total bytes.
@@ -174,11 +172,17 @@
 }
 
 #pragma mark URLSession init
-- (instancetype)initWithTempFileFolder:(NSString*) tempFolder cacheEnable:(BOOL) cacheEnable{
+- (instancetype)initWithCacheEnable:(BOOL) cacheEnable{
     if (self = [super init]) {
         _fileManager = [[EKAudioQueueToolFileManager alloc] init];
-        _fileManager.saveFolder = tempFolder;
-        self.tempFileSaveFolder = tempFolder;
+        NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
+        NSString *cachefolder = [CachePath stringByAppendingPathComponent:@"EKAQToolCache"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if (![fileManager fileExistsAtPath:cachefolder]) {
+            [fileManager createDirectoryAtPath:cachefolder withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        _fileManager.saveFolder = cachefolder;
+        self.tempFileSaveFolder = cachefolder;
         _audioCore = [[AudioQueueCore alloc] init];
         _audioCore.delegate = self;
         _cacheEnable = cacheEnable;
@@ -186,12 +190,10 @@
     return self;
 }
 
-- (instancetype)initWithTempFileFolder:(NSString*) tempFolder {
-    return [self initWithTempFileFolder:tempFolder cacheEnable:YES];
-}
+
 
 - (instancetype)init {
-    return [self initWithTempFileFolder:CachePath];
+    return [self initWithCacheEnable:YES];
 }
 
 - (void)cleanSeekTimeS {
@@ -426,19 +428,36 @@
 - (void)stop {
     [self setupInitParams];
 }
+
 - (void)pause {
     [self.audioCore pause];
 }
+
 - (BOOL)isPaused {
     return [self.audioCore isPaused];
 }
+
 - (BOOL)isPlaying {
     return [self.audioCore isPlaying];
 }
+
 - (BOOL)isIdle {
     return [self.audioCore isIdle];
 }
+
 - (BOOL)isFinishPlaySuccessfully {
     return [self.audioCore isFinishPlayingSuccessfully];
+}
+
+- (void)cleanCache {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (![fileManager fileExistsAtPath:self.tempFileSaveFolder]) {
+        return;
+    }
+    NSArray *tempFileList = [fileManager contentsOfDirectoryAtPath:self.tempFileSaveFolder error:nil];
+    for (NSString* fileName in tempFileList) {
+        NSString *filePath = [self.tempFileSaveFolder stringByAppendingPathComponent:fileName];
+        [self deleteFile:filePath];
+    }
 }
 @end

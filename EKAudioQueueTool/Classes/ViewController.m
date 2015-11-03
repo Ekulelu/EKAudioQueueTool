@@ -169,9 +169,9 @@
 
 - (IBAction)sliderTouchupInside:(UISlider *)slider {
     double seekTimeInSecond = self.audioTool.duration * slider.value;
-//    [self.timer setFireDate:[NSDate distantFuture]];
+
     [self.audioTool seekTime:seekTimeInSecond];
-//    [self.timer setFireDate:[NSDate distantPast]];
+
     self.touchDownFlag = NO;
 }
 
@@ -179,6 +179,9 @@
     self.touchDownFlag = YES;
 }
 
+- (IBAction)cleanCache:(id)sender {
+    [self.audioTool cleanCache];
+}
 
 
 -(void)viewDidDisappear:(BOOL)animated{

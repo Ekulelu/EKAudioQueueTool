@@ -27,7 +27,9 @@
 
 @implementation EKAudioQueueToolFileManager
 
-static EKAudioQueueToolFileManager * _instance;
+
+
+
 
 //called only when the audio file is not exist
 - (RWFileS *)createFileWithRequestURL:(NSURL *) url extensionName:(NSString *) extensionName fileLength:(long long) fileLength{

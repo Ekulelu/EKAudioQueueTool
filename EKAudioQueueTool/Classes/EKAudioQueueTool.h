@@ -50,8 +50,9 @@
 @property (nonatomic, assign) BOOL cacheEnable;
 
 - (instancetype)init;
-- (instancetype)initWithTempFileFolder:(NSString*) tempFolder;
-- (instancetype)initWithTempFileFolder:(NSString*) tempFolder cacheEnable:(BOOL) cacheEnable;
+
+- (instancetype)initWithCacheEnable:(BOOL) cacheEnable;
+- (void)cleanCache;
 //play local audio
 - (void)playLocalAudioWithFilePath: (NSString*) filePath;
 //play online audio
