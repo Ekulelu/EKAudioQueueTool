@@ -14,7 +14,7 @@
 		C3AC46271BE7871400FAC354 /* EKAudioQueueToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46261BE7871400FAC354 /* EKAudioQueueToolTests.m */; };
 		C3AC46321BE7871400FAC354 /* EKAudioQueueToolUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46311BE7871400FAC354 /* EKAudioQueueToolUITests.m */; };
 		C3AC46411BE7878300FAC354 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C3AC463F1BE7878300FAC354 /* Main.storyboard */; };
-		C3AC464C1BE7878A00FAC354 /* AudioQueueCore.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46441BE7878A00FAC354 /* AudioQueueCore.m */; };
+		C3AC464C1BE7878A00FAC354 /* MGAudioQueueCore.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46441BE7878A00FAC354 /* MGAudioQueueCore.m */; };
 		C3AC464D1BE7878A00FAC354 /* EKAudioQueueTool.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46461BE7878A00FAC354 /* EKAudioQueueTool.m */; };
 		C3AC464E1BE7878A00FAC354 /* EKAudioQueueToolFileManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46481BE7878A00FAC354 /* EKAudioQueueToolFileManager.m */; };
 		C3AC46521BE7879100FAC354 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3AC46511BE7879100FAC354 /* ViewController.m */; };
@@ -52,8 +52,8 @@
 		C3AC46311BE7871400FAC354 /* EKAudioQueueToolUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKAudioQueueToolUITests.m; sourceTree = "<group>"; };
 		C3AC46331BE7871400FAC354 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C3AC46401BE7878300FAC354 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		C3AC46431BE7878A00FAC354 /* AudioQueueCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioQueueCore.h; sourceTree = "<group>"; };
-		C3AC46441BE7878A00FAC354 /* AudioQueueCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioQueueCore.m; sourceTree = "<group>"; };
+		C3AC46431BE7878A00FAC354 /* MGAudioQueueCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGAudioQueueCore.h; sourceTree = "<group>"; };
+		C3AC46441BE7878A00FAC354 /* MGAudioQueueCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGAudioQueueCore.m; sourceTree = "<group>"; };
 		C3AC46451BE7878A00FAC354 /* EKAudioQueueTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKAudioQueueTool.h; sourceTree = "<group>"; };
 		C3AC46461BE7878A00FAC354 /* EKAudioQueueTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EKAudioQueueTool.m; sourceTree = "<group>"; };
 		C3AC46471BE7878A00FAC354 /* EKAudioQueueToolFileManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EKAudioQueueToolFileManager.h; sourceTree = "<group>"; };
@@ -154,8 +154,8 @@
 		C3AC46421BE7878A00FAC354 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				C3AC46431BE7878A00FAC354 /* AudioQueueCore.h */,
-				C3AC46441BE7878A00FAC354 /* AudioQueueCore.m */,
+				C3AC46431BE7878A00FAC354 /* MGAudioQueueCore.h */,
+				C3AC46441BE7878A00FAC354 /* MGAudioQueueCore.m */,
 				C3AC46451BE7878A00FAC354 /* EKAudioQueueTool.h */,
 				C3AC46461BE7878A00FAC354 /* EKAudioQueueTool.m */,
 				C3AC46471BE7878A00FAC354 /* EKAudioQueueToolFileManager.h */,
@@ -300,7 +300,7 @@
 				C3AC460E1BE7871300FAC354 /* main.m in Sources */,
 				C3AC464E1BE7878A00FAC354 /* EKAudioQueueToolFileManager.m in Sources */,
 				C3AC464D1BE7878A00FAC354 /* EKAudioQueueTool.m in Sources */,
-				C3AC464C1BE7878A00FAC354 /* AudioQueueCore.m in Sources */,
+				C3AC464C1BE7878A00FAC354 /* MGAudioQueueCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +526,7 @@
 				C3AC46381BE7871400FAC354 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C3AC46391BE7871400FAC354 /* Build configuration list for PBXNativeTarget "EKAudioQueueToolTests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +535,7 @@
 				C3AC463B1BE7871400FAC354 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C3AC463C1BE7871400FAC354 /* Build configuration list for PBXNativeTarget "EKAudioQueueToolUITests" */ = {
 			isa = XCConfigurationList;
@@ -542,6 +544,7 @@
 				C3AC463E1BE7871400FAC354 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

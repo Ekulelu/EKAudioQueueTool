@@ -36,7 +36,7 @@
 //  3. This notice may not be removed or altered from any source
 //     distribution.
 
-#import "AudioQueueCore.h"
+#import "MGAudioQueueCore.h"
 #include <AudioToolbox/AudioToolbox.h>
 #import <UIKit/UIKit.h>
 #include <pthread.h>
@@ -74,7 +74,7 @@ NSString * const AS_NETWORK_CONNECTION_FAILED_STRING = @"Network connection fail
 NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger than kAQDefaultBufSize.";
 
 
-@interface AudioQueueCore()
+@interface MGAudioQueueCore()
 {
     
     //@AudioStreamer
@@ -137,7 +137,7 @@ NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger t
 @end
 
 
-@implementation AudioQueueCore
+@implementation MGAudioQueueCore
 
 #pragma mark - AudioQueue
 
@@ -393,7 +393,7 @@ NSString * const AS_AUDIO_BUFFER_TOO_SMALL_STRING = @"Audio packets are larger t
         }
         
         AudioFileTypeID fileTypeHint =
-        [AudioQueueCore hintForFileExtension:self.fileExtension];
+        [MGAudioQueueCore hintForFileExtension:self.fileExtension];
         
         // create an audio file stream parser
         err = AudioFileStreamOpen((__bridge void * _Nullable)(self), ASPropertyListenerProc, ASPacketsProc,
@@ -534,7 +534,7 @@ static void ASPropertyListenerProc(void *						inClientData,
                                    UInt32 *						ioFlags)
 {
     // this is called by audio file stream when it finds property values
-    AudioQueueCore* audioCore = (__bridge AudioQueueCore *)inClientData;
+    MGAudioQueueCore* audioCore = (__bridge MGAudioQueueCore *)inClientData;
     [audioCore
      handlePropertyChangeForFileStream:inAudioFileStream
      fileStreamPropertyID:inPropertyID
@@ -559,7 +559,7 @@ static void ASPacketsProc(		void *					inClientData,
                           AudioStreamPacketDescription	*inPacketDescriptions)
 {
     // this is called by audio file stream when it finds packets of audio
-    AudioQueueCore* audioCore = (__bridge AudioQueueCore *)inClientData;
+    MGAudioQueueCore* audioCore = (__bridge MGAudioQueueCore *)inClientData;
     [audioCore
      handleAudioPackets:inInputData
      numberBytes:inNumberBytes
@@ -582,7 +582,7 @@ static void ASAudioQueueOutputCallback(void*				inClientData,
 {
     // this is called by the audio queue when it has finished decoding our data.
     // The buffer is now free to be reused.
-    AudioQueueCore* audioCore = (__bridge AudioQueueCore *)inClientData;
+    MGAudioQueueCore* audioCore = (__bridge MGAudioQueueCore *)inClientData;
     [audioCore handleBufferCompleteForQueue:inAQ buffer:inBuffer];
 }
 
@@ -595,7 +595,7 @@ static void ASAudioQueueOutputCallback(void*				inClientData,
 //
 static void ASAudioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueuePropertyID inID)
 {
-    AudioQueueCore* audioCore = (__bridge AudioQueueCore *)inUserData;
+    MGAudioQueueCore* audioCore = (__bridge MGAudioQueueCore *)inUserData;
     [audioCore handlePropertyChangeForQueue:inAQ propertyID:inID];
 }
 
@@ -1558,13 +1558,13 @@ static void ASAudioSessionInterruptionListener(__unused void * inClientData, UIn
         {
             char *errChars = (char *)&err;
             EKLog(@"%@ err: %c%c%c%c %d\n",
-                  [AudioQueueCore stringForErrorCode:anErrorCode],
+                  [MGAudioQueueCore stringForErrorCode:anErrorCode],
                   errChars[3], errChars[2], errChars[1], errChars[0],
                   (int)err);
         }
         else
         {
-            EKLog(@"%@", [AudioQueueCore stringForErrorCode:anErrorCode]);
+            EKLog(@"%@", [MGAudioQueueCore stringForErrorCode:anErrorCode]);
         }
         
         if (state == AS_PLAYING ||

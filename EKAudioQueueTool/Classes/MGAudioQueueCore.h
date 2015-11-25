@@ -40,19 +40,19 @@
 
 
 
-@class AudioQueueCore;
+@class MGAudioQueueCore;
 
-@protocol AudioQueueCoreDelegate <NSObject>
+@protocol MGAudioQueueCoreDelegate <NSObject>
 @required
-- (NSData *) audioQueueCore:(AudioQueueCore *) audioQueueCore readDataOfLength:(long long) dataLength;
-- (long long) fileLengthWithAudioQueueCore:(AudioQueueCore *) audioQueueCore;
-- (NSString *) fileExtensionWithAudioQueueCore:(AudioQueueCore *) audioQueueCore;
-- (double) seekTimeWithAudioQueueCore:(AudioQueueCore *) audioQueueCore;
-- (BOOL) isFinishPlayWithAudioQueueCore:(AudioQueueCore *) audioQueueCore;
+- (NSData *) audioQueueCore:(MGAudioQueueCore *) audioQueueCore readDataOfLength:(long long) dataLength;
+- (long long) fileLengthWithAudioQueueCore:(MGAudioQueueCore *) audioQueueCore;
+- (NSString *) fileExtensionWithAudioQueueCore:(MGAudioQueueCore *) audioQueueCore;
+- (double) seekTimeWithAudioQueueCore:(MGAudioQueueCore *) audioQueueCore;
+- (BOOL) isFinishPlayWithAudioQueueCore:(MGAudioQueueCore *) audioQueueCore;
 @end
 
 
-@interface AudioQueueCore : NSObject
+@interface MGAudioQueueCore : NSObject
 #define LOG_QUEUED_BUFFERS 0
 
 //@AudioStreamer
@@ -142,7 +142,7 @@ typedef struct {
 @property (readonly, assign) double playProgress;
 @property (readonly, assign) double duration;
 //@property (nonatomic, assign) double seekTime;
-@property (nonatomic, weak) id<AudioQueueCoreDelegate> delegate;
+@property (nonatomic, weak) id<MGAudioQueueCoreDelegate> delegate;
  //In AudioQueueCoreDelegate, you should set the fileLength before you call this method. Or maybe can not return the right duration
 - (void)startAudioPlay;
 - (AudioQueueCoreSeekTime)shouldSeekToTime:(double)requestSeekTime;

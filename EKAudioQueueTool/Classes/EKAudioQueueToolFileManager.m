@@ -28,9 +28,6 @@
 @implementation EKAudioQueueToolFileManager
 
 
-
-
-
 //called only when the audio file is not exist
 - (RWFileS *)createFileWithRequestURL:(NSURL *) url extensionName:(NSString *) extensionName fileLength:(long long) fileLength{
     NSString *md5 = [self md5:url.path];
@@ -198,7 +195,7 @@
         EKLog(@"seek the same time");
         
     } else {
-        //Other situation I missed. If
+        //Other situation I missed. If you see the situatuion, please contact me.
         EKErrorLog(@"Error situation to be fix");
         NSString *errorLog = [NSString stringWithFormat:@"seekTimeOffset = @%lld \n lastSeekTimeOffset = %lld \n currentWrite = %lld \n fileLength = %lld isSeekTime = %d", seekByteOffset, lastseekByteOffset, currentWriteOffset, fileLength, isSeekTime];
         NSString *path = [DocumentPath stringByAppendingPathComponent:@"errorLog.log"];

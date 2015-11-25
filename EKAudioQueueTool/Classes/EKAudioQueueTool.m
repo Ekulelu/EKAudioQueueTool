@@ -21,14 +21,14 @@
 //
 #import "EKAudioQueueTool.h"
 #import "EKAudioQueueToolFileManager.h"
-#import "AudioQueueCore.h"
+#import "MGAudioQueueCore.h"
 #import "EKAudioQueueToolHeader.h"
 
-@interface EKAudioQueueTool()<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, AudioQueueCoreDelegate>
+@interface EKAudioQueueTool()<NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate, MGAudioQueueCoreDelegate>
 {
     double _duration;
 }
-@property (nonatomic, strong) AudioQueueCore* audioCore;
+@property (nonatomic, strong) MGAudioQueueCore* audioCore;
 @property (nonatomic, strong) EKAudioQueueToolFileManager* fileManager;
 
 @property (nonatomic, strong) NSURLSessionDataTask* dataTask;
@@ -64,11 +64,11 @@
 @implementation EKAudioQueueTool
 
 #pragma mark AudioQueueCoreDelegate
-- (long long)fileLengthWithAudioQueueCore:(AudioQueueCore *)audioQueueCore {
+- (long long)fileLengthWithAudioQueueCore:(MGAudioQueueCore *)audioQueueCore {
     return self.fileLength;
 }
 
-- (NSData *)audioQueueCore:(AudioQueueCore *)audioQueueCore readDataOfLength:(long long)dataLength {
+- (NSData *)audioQueueCore:(MGAudioQueueCore *)audioQueueCore readDataOfLength:(long long)dataLength {
     while (self.currentReadOffset + dataLength > self.currentWriteOffset && self.dataTask != nil && self.downloadForPlaying) {
         _waitingData = YES;
         [NSThread sleepForTimeInterval:0.2];// you can also return nil. the audioQueue will pause, but when it
@@ -83,15 +83,15 @@
     return data;
 }
 
-- (NSString *)fileExtensionWithAudioQueueCore:(AudioQueueCore *) audioQueueCore {
+- (NSString *)fileExtensionWithAudioQueueCore:(MGAudioQueueCore *) audioQueueCore {
     return self.fileExtension;
 }
 
-- (double)seekTimeWithAudioQueueCore:(AudioQueueCore *)audioQueueCore {
+- (double)seekTimeWithAudioQueueCore:(MGAudioQueueCore *)audioQueueCore {
     return self.seekTimeS.exactSeekTime;
 }
 
-- (BOOL)isFinishPlayWithAudioQueueCore:(AudioQueueCore *)audioQueueCore {
+- (BOOL)isFinishPlayWithAudioQueueCore:(MGAudioQueueCore *)audioQueueCore {
     return self.currentReadOffset >= self.fileLength && self.currentReadOffset > 0;
 }
 
@@ -121,8 +121,6 @@
     EKLog(@"sub fileLength = %ld", length);
     EKLog(@"response currentWrite = %lld", self.currentWriteOffset);
 
-    //    NSString* mimeType = response.MIMEType;
-//    EKLog(@"mimeType = %@,\n contentLength = %lld, \n suggestFilename = %@\n",mimeType, self.fileLength, suggestFilename);
     
     [self.audioCore startAudioPlay];
     
@@ -183,7 +181,7 @@
         }
         _fileManager.saveFolder = cachefolder;
         self.tempFileSaveFolder = cachefolder;
-        _audioCore = [[AudioQueueCore alloc] init];
+        _audioCore = [[MGAudioQueueCore alloc] init];
         _audioCore.delegate = self;
         _cacheEnable = cacheEnable;
     }
